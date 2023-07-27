@@ -8,6 +8,41 @@ var secret_key = process.env.secret_key;
 
 exports.change_password = async (req, res, next) => 
 {
+    //HII
+    try 
+    {
+        const {
+            form_data
+        } = req.body;
+        
+        if(form_data.access_token == access_token && form_data.secret_key == secret_key)
+        {
+            AccountSetting.change_password(form_data, req, res, next);
+        }
+        else
+        {
+            res.status(200).json({
+                status : "error",
+                status_code : 400,
+                message : "Invalid Request",
+            });
+        }
+       
+        
+    } catch (err) 
+    {
+        res.status(200).json({
+            status : "error",
+            status_code : 400,
+            message : "Something went wrong!!! please try again.",
+            error_message: err,
+        });
+        //next(err);
+    }
+};
+exports.change_password = async (req, res, next) => 
+{
+    //HII
     try 
     {
         const {
